@@ -1,15 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 # Insert your username in the below request
-page = requests.get("https://github.com/")
+page = requests.get("https://github.com/Brymo")
 soup = BeautifulSoup(page.text, 'html.parser')
 # gets the contributions table
-contirbutions = soup.find("div", {"class": "js-yearly-contributions"})
+table_col = soup.find("div", {"class": "js-yearly-contributions"}).findAll("g")
 columns = []
 # Converts the colour of the rectangle to a numeric value
 rock = {"#ebedf0": 0, "#9be9a8": 1, "#40c463": 2, "#30a14e": 3, "#216e39": 4, }
-ret = contirbutions.findAll("g")
-for r in ret:
+for r in table_col:
     print(r.get("transform"))
     rectangles = r.findAll("rect")
     current = []
@@ -31,6 +30,6 @@ for i in range(6):
             current_column.append(0)
     output.append(current_column)
 
-#prints the output in the nice format
+# prints the output in the nice format
 for child in output:
     print(child)
